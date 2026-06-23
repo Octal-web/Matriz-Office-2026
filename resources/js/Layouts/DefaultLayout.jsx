@@ -1,0 +1,317 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { usePage, Link, Head } from '@inertiajs/react';
+
+import logoWhite from '@/assets/logo.png';
+import logoFooter from '@/assets/logo-footer.png';
+
+import Lenis from 'lenis';
+
+import { CookieModal } from '@/Components/CookieModal';
+import { CustomLink } from '@/Components/CustomLink';
+
+import { homeShowrooms } from '@/Data/homeShowrooms';
+
+const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corporativo em Goiânia e Palmas', description = 'A Matriz Office é especialista em mobiliário corporativo de alto padrão. Soluções completas para escritórios em Goiânia (GO) e Palmas (TO). Peça seu orçamento!' }) => {
+    const { controller, action, notifyCookie, rejectCookie } = usePage().props;
+
+    const [isVisible, setIsVisible] = useState(true);
+    const [isAtTop, setIsAtTop] = useState(true); 
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [trackingEnabled, setTrackingEnabled] = useState(false);
+    const lenisRef = useRef(null);
+
+    useEffect(() => {
+        lenisRef.current = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            smooth: true,
+            smoothTouch: false,
+        });
+
+        function raf(time) {
+            lenisRef.current.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+
+        return () => {
+            lenisRef.current.destroy();
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            
+            setIsAtTop(currentScrollY <= 140);
+            
+            if (!isMenuOpen) {
+                if (currentScrollY > 200) {
+                    setIsVisible(currentScrollY < lastScrollY);
+                } else {
+                    setIsVisible(true);
+                }
+            }
+            
+            setLastScrollY(currentScrollY);
+        };
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [lastScrollY, isMenuOpen]);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const acceptCookies = () => {
+        setTrackingEnabled(true);
+    };
+    
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         if (notifyCookie || trackingEnabled) {
+    //             const script = document.createElement('script');
+    //             script.innerHTML = `
+    //                 (function(w,d,s,l,i){
+    //                     w[l]=w[l]||[];
+    //                     w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+    //                     var f=d.getElementsByTagName(s)[0],
+    //                         j=d.createElement(s),
+    //                         dl=l!='dataLayer'?'&l='+l:'';
+    //                     j.async=true;
+    //                     j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    //                     f.parentNode.insertBefore(j,f);
+    //                 })(window,document,'script','dataLayer','${dados_site.tag_google}');
+    //             `;
+    //             document.head.appendChild(script);
+
+    //             const noscript = document.createElement('noscript');
+    //             noscript.innerHTML = `
+    //                 <iframe src="https://www.googletagmanager.com/ns.html?id=${dados_site.tag_google}" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    //             `;
+    //             document.body.appendChild(noscript);
+
+    //             window.dataLayer = window.dataLayer || [];
+    //             window.dataLayer.push({
+    //                 event: "ab_test_group",
+    //                 ab_group: abGroup,
+    //             });
+    //         }
+    //     }, 100);
+    // }, [notifyCookie, trackingEnabled]);
+
+    const menuItems = [
+        { name: "A Matriz Office", route: "Home.index", to: "#sobre", label: "Saiba mais sobre a Matriz Office", external: false },
+        { name: "Nossas Soluções", route: "Home.index", to: "#solucoes", label: "Confira nossas soluções", external: false },
+        { name: "Onde Encontrar", route: "Home.index", to: "#onde-encontrar", label: "Onde encontrar a Matriz Office", external: false },
+        { name: "Parceiros", route: "Home.index", to: "#parceiros", label: "Parceiros da Matriz Office", external: false },
+    ];
+
+    return (
+        <>
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content={description} />
+
+                <meta property="og:url" content={window.location.pathname} />
+                <meta property="og:type" content="website"/>
+                <meta property="og:title" content={title} />
+                <meta property="og:description" content={description} />
+                <meta property="og:image" content="/assets/preview.jpg" />
+
+                <meta name="robots" content="index, follow"/>
+                <meta name="author" content="Octal Web" />
+                
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={title} />
+                <meta name="twitter:description" content={description || ''} />
+                <meta name="twitter:image" content="/assets/preview.jpg" />
+
+                <link rel="icon" href={`/favicon.ico`} type="image/x-icon" />
+            </Head>
+                
+            <header className={`header fixed top-0 left-0 right-0 z-[20] transition-all duration-300 ease-in-out ${!isAtTop ? ' bg-black shadow-2xl shadow-black/10' : ''} ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+                <div className={`fixed inset-0 bg-black md:hidden duration-300 ease-out ${isMenuOpen ? 'opacity-30' : 'opacity-0 h-0'}`} onClick={() => {setIsMenuOpen(false)}}></div>
+                <div className="container max-w-x-large">
+                    <div className="flex items-center justify-between">
+                        <div className="relative z-[1] flex items-center justify-between w-full my-5 md:my-7 2xl:my-8">
+                            <h1 className="flex items-center">
+                                <Link href={route('Home.index')} className="flex items-center">
+                                    <img src={logoWhite} alt="Logo" className="block max-w-30 md:max-w-50 lg:max-w-80" />
+                                </Link>
+                            </h1>
+
+                            <button className={`fixed top-0 left-0 w-screen h-screen md:hidden bg-black transition-all  ${isMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'}`} aria-label="Close Menu" onClick={() => setIsMenuOpen(false)} />
+
+                            <div className={`fixed md:relative bg-black bg-opacity-70 max-md:backdrop-blur-sm md:bg-transparent left-0 ${!isMenuOpen ? '-top-1 max-md:-translate-y-full' : 'top-0'} md:left-auto md:top-auto flex flex-col md:flex-row md:items-center justify-center md:justify-end w-full h-[calc(100vh_/6_*_5)] md:h-auto md:my-0.5 2xl:my-1.5 transition-all ease-out duration-500`}>
+                                <nav className="relative">
+                                    <ul className="flex flex-col md:flex-row items-center md:justify-center gap-6 md:gap-2 xl:gap-10 relative lg:mr-5 2xl:mr-0">
+                                        {menuItems.map((item, index) => (
+                                            <li key={index}>
+                                                {item.external ? (
+                                                    <a
+                                                        href={item.url}
+                                                        className="max-md:text-xl text-white font-medium transition-all hover:opacity-80"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        aria-label={item.name}
+                                                    >
+                                                        {item.name}
+                                                    </a>
+                                                ) : (
+                                                    <CustomLink
+                                                        href={route(item.route)}
+                                                        to={item.to}
+                                                        className="max-md:text-xl text-white font-medium transition-all hover:opacity-80"
+                                                        onClick={() => setIsMenuOpen(false)}
+                                                        aria-label={item.name}
+                                                    >
+                                                        {item.name}
+                                                    </CustomLink>
+                                                )}
+                                            </li>
+                                        ))}
+
+                                        <li
+                                            className="max-md:opacity-0 max-md:translate-y-[-20px]"
+                                            style={typeof window !== 'undefined' && window.innerWidth < 768 ? {
+                                                opacity: isMenuOpen ? 1 : 0,
+                                                transform: isMenuOpen ? 'translateY(0)' : 'translateY(-20px)',
+                                                transition: `opacity 0.4s ease-out ${menuItems.length * 0.1}s, transform 0.4s ease-out ${menuItems.length * 0.1}s`
+                                            } : {}}
+                                        >
+                                            <CustomLink href={route('Home.index')} to="#orcamento" className="lg:mx-4 bg-black font-medium text-center text-white px-6 py-2 min-w-40 sm:min-w-44 transition-all hover:bg-white hover:text-black">Peça seu Orçamento</CustomLink>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                            <button className="md:hidden relative z-[2]" onClick={toggleMenu} aria-label="Toggle Menu">
+                                <div className="flex items-center">
+                                    <div className="relative w-7 h-[21px]">
+                                        <div
+                                            className={`absolute top-0 bg-black h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? 'rotate-45 !top-[10px] bg-white' : 'bg-black'}`}
+                                            style={{
+                                                transitionDelay: isMenuOpen ? '0ms, 400ms' : '0ms',
+                                                transitionProperty: 'top, transform'
+                                            }}
+                                        ></div>
+                                        <div
+                                            className={`absolute top-[9px] h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? 'scale-x-0 !top-[10px] bg-white' : 'bg-black'}`}
+                                            style={{
+                                                transitionDelay: isMenuOpen ? '0ms, 400ms' : '0ms',
+                                                transitionProperty: 'top, transform'
+                                            }}
+                                        ></div>
+                                        <div
+                                            className={`absolute bottom-0 bg-black h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? '-rotate-45 bottom-[9px] bg-white' : 'bg-black'}`}
+                                            style={{
+                                                transitionDelay: isMenuOpen ? '0ms, 400ms' : '0ms',
+                                                transitionProperty: 'bottom, transform'
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main className="overflow-hidden">
+                {children}
+            </main>
+
+            <footer className="bg-neutral-950 pt-12 lg:pt-10 pb-4">
+                <div className="container max-w-large">
+                    <div className="grid grid-cols-1 gap-10 md:grid-cols-[0.9fr_1fr_1fr] md:gap-12 lg:items-start mb-6">
+                        <div className="flex items-start md:pt-10">
+                            <img
+                                src={logoFooter}
+                                alt="Matriz Office"
+                                className=""
+                            />
+                        </div>
+
+                        {homeShowrooms.map((showroom) => (
+                            <address
+                                key={showroom.id}
+                                className="not-italic text-sm leading-snug text-neutral-300"
+                            >
+                                <h2 className="mb-3 text-lg font-semibold text-white">
+                                    {showroom.city} ({showroom.state})
+                                </h2>
+
+                                <div className="space-y-2">
+                                    <p>
+                                        <strong className="font-semibold text-white">Endereço:</strong>{' '}
+                                        <a
+                                            href={showroom.mapUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="transition-colors hover:text-primary"
+                                        >
+                                            {showroom.building} —{' '}
+                                            <span className="whitespace-pre-line tracking-tighter">{showroom.address}</span>
+                                        </a>
+                                    </p>
+
+                                    <p>
+                                        <strong className="font-semibold text-white">Telefone:</strong>{' '}
+                                        <a
+                                            href={`tel:${showroom.phone.replace(/\D/g, '')}`}
+                                            className="transition-colors hover:text-primary"
+                                        >
+                                            {showroom.phone}
+                                        </a>
+                                    </p>
+
+                                    <p>
+                                        <strong className="font-semibold text-white">E-mail:</strong>{' '}
+                                        <a
+                                            href={`mailto:${showroom.email}`}
+                                            className="break-all transition-colors hover:text-primary"
+                                        >
+                                            {showroom.email}
+                                        </a>
+                                    </p>
+
+                                    <p>
+                                        <strong className="font-semibold text-white">
+                                            Horário de funcionamento:
+                                        </strong>{' '}
+                                        {showroom.openingHours}
+                                    </p>
+                                </div>
+                            </address>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="border-t border-white/10">
+                    <div className="container max-w-large flex flex-col gap-3 pt-5 text-xs text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
+                        <p>© { new Date().getFullYear() } Matriz Office. Todos os direitos reservados.</p>
+
+                        <div className="flex flex-wrap gap-x-5 gap-y-2">
+                            <a href={route('Politicas.privacidade')} target="_blank" className="transition-colors hover:text-white">
+                                Política de Privacidade
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            {!notifyCookie || !rejectCookie ? (
+                <CookieModal acceptCookies={acceptCookies} visible={notifyCookie ? false : true} />
+            ) : null}
+        </>
+    );
+};
+
+export default DefaultLayout;
