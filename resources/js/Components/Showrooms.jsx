@@ -1,5 +1,5 @@
 
-import { homeShowrooms } from '@/Data/HomeShowrooms';
+import { homeShowrooms } from '@/Data/homeShowrooms';
 import { Reveal } from './Reveal';
 import { ShowroomCard } from './ShowroomCard';
 
