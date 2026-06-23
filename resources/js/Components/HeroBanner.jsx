@@ -1,0 +1,137 @@
+import React, { useEffect, useRef } from 'react';
+import { CustomLink } from '@/Components/CustomLink';
+
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export const HeroBanner = () => {
+    const HeroImgRef = useRef(null);
+    const HeroBgRef = useRef(null);
+    const HeroTextRef = useRef(null);
+    const HeroQuoteRefs = useRef([]);
+
+    const HeroQuote = [
+        <>Soluções em <span className="font-semibold">Mobiliário</span></>,
+        <><span className="font-semibold">Corporativo</span> para Escritórios</>,
+        <>que <span className="font-semibold text-primary">Evoluem</span> com o seu Negócio</>
+    ];
+
+    useEffect(() => {  
+        gsap.fromTo(HeroImgRef.current, 
+        {
+            backgroundPositionY: '50%',
+        },
+        {
+            backgroundPositionY: '-40%',
+            duration: 1,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: HeroImgRef.current,
+                start: 'top',
+                end: 'bottom',
+                scrub: true
+            }
+        });
+
+        HeroQuoteRefs.current = HeroQuoteRefs.current.filter(Boolean);
+
+        HeroQuoteRefs.current.forEach((ref, index) => {
+            gsap.fromTo(
+                ref,
+                {
+                    y: '100%',
+                },
+                {
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    delay: index * 0.15,
+                    scrollTrigger: {
+                        trigger: HeroImgRef.current,
+                        start: 'top 75%',
+                    },
+                }
+            );
+        });
+
+        gsap.fromTo(
+            HeroTextRef.current,
+            {
+                y: 20,
+                opacity: 0,
+            },
+            {
+                y: 0,
+                opacity: 1,
+                duration: 0.6,
+                delay: 0.6,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: HeroTextRef.current,
+                    start: 'top 85%',
+                },
+            }
+        );
+
+        ScrollTrigger.refresh();
+
+        return () => {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
+    }, []);
+
+    return (
+        <section className="relative overflow-hidden">
+            <div
+                ref={HeroImgRef}
+                className="absolute inset-0 max-[430px]:bg-[length:auto_120%] max-[570px]:bg-[length:200%] sm:bg-[length:170%] bg-[60%] xl:bg-[length:100%] opacity-60 sm:opacity-100 bg-center bg-no-repeat"
+                style={{
+                    backgroundImage: 'url(content/display/main-bg.jpg)',
+                }}
+            />
+
+            <div ref={HeroBgRef} className="absolute inset-0 bg-black origin-top opacity-50" />
+            <div className="absolute top-0 left-0 bottom-0 w-1/2 bg-gradient-to-r from-black/90 from-30% to-transparent" />
+
+            <div className="relative container max-w-large">
+                <div className="w-3/4 md:max-w-4xl min-h-[78vh] flex flex-col justify-end pb-[15%] ml-2 pt-28 md:pb-[5%] 2xl:pb-[8%]">
+                    <h1 className="text-3xl sm:text-4xl 2xl:text-[44px] text-white leading-tight mb-6">
+                        {HeroQuote.map((quote, index) => (
+                            <div
+                                key={index}
+                                className="overflow-hidden pb-1.5"
+                            >
+                                <div
+                                    ref={(el) => {
+                                        if (el) {
+                                            HeroQuoteRefs.current[index] = el;
+                                        }
+                                    }}
+                                >
+                                    {quote}
+                                </div>
+                            </div>
+                        ))}
+                    </h1>
+
+                    <div
+                        ref={HeroTextRef}
+                        className="max-w-[715px] sm:text-xl font-light leading-normal mb-11 text-white text-balance"
+                    >
+                        <p>A Matriz Office desenvolve soluções completas para ambientes corporativos, unindo mobiliário, planejamento de espaços e personalização para criar escritórios mais funcionais, produtivos e alinhados à realidade de cada empresa.</p>
+                    </div>
+
+                    <CustomLink
+                        href={route('Home.index')}
+                        to="#solucoes"
+                        className="w-fit py-4 px-8 sm:px-11 bg-transparent border border-primary text-white text-sm font-semibold uppercase sm:tracking-wider transition-colors duration-300 hover:bg-primary hover:text-black"
+                    >
+                        Conheça nossas soluções
+                    </CustomLink>
+                </div>
+            </div>
+        </section>
+    );
+};

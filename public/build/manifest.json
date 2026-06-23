@@ -1,0 +1,38 @@
+{
+  "resources/js/Pages/Home.jsx": {
+    "file": "assets/Home-CvwpWqZ6.js",
+    "name": "Home",
+    "src": "resources/js/Pages/Home.jsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.jsx"
+    ],
+    "css": [
+      "assets/Home-B6grfV6A.css"
+    ],
+    "assets": [
+      "assets/logo-dczY7RTJ.png",
+      "assets/logo-footer-DTUgbuoB.png"
+    ]
+  },
+  "resources/js/app.jsx": {
+    "file": "assets/app-CWR2AqM-.js",
+    "name": "app",
+    "src": "resources/js/app.jsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Home.jsx"
+    ],
+    "css": [
+      "assets/app-CyXczLUn.css"
+    ]
+  },
+  "resources/js/assets/logo-footer.png": {
+    "file": "assets/logo-footer-DTUgbuoB.png",
+    "src": "resources/js/assets/logo-footer.png"
+  },
+  "resources/js/assets/logo.png": {
+    "file": "assets/logo-dczY7RTJ.png",
+    "src": "resources/js/assets/logo.png"
+  }
+}
