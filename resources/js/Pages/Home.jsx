@@ -5,6 +5,7 @@ import { Solutions } from '@/Components/Solutions';
 import { Showrooms } from '@/Components/Showrooms';
 import { Brands } from '@/Components/Brands';
 import { ProjectForm } from '@/Components/ProjectForm';
+import { DoubtsList } from '@/Components/DoubtsList';
 
 import DefaultLayout from '@/Layouts/DefaultLayout';
 
@@ -18,6 +19,7 @@ const Page = () => {
             <Showrooms />
             <Brands />
             <ProjectForm />
+            <DoubtsList />
         </DefaultLayout>
     );
 };

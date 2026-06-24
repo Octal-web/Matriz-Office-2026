@@ -19,5 +19,6 @@ use App\Http\Controllers\PoliticasController;
 Route::get('/', [HomeController::class, 'index'])->name('Home.index');
 
 Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('Contato.enviar');
+Route::get('/contato/cadastro-concluido/{token}', [ContatoController::class, 'concluido'])->name('Contato.concluido');
 
-Route::get('/politica-de-privacidade', [PoliticasController::class, 'index'])->name('Politicas.privacidade');
+Route::get('/politica-de-privacidade', [PoliticasController::class, 'privacidade'])->name('Politicas.privacidade');

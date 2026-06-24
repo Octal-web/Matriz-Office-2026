@@ -67,7 +67,7 @@ export const SolutionsSlides = ({ slides }) => {
 
     return (
         <div ref={containerRef}>
-            <h2 className="text-2xl sm:text-3xl 2xl:text-[34px] text-white !leading-tight max-w-[900px] mx-auto mb-8 text-center">
+            <h2 className="text-2xl sm:text-3xl 2xl:text-[34px] text-white !leading-tight max-w-[900px] mx-auto mb-8 text-center text-balance">
                 Ambientes que inspiram <span className="text-primary font-semibold">produtividade</span> e <span className="text-primary font-semibold">bem-estar</span>
             </h2>
 
@@ -75,8 +75,8 @@ export const SolutionsSlides = ({ slides }) => {
                 slidesPerView={3.1}
                 spaceBetween={30}
                 breakpoints={{
-                    0: { slidesPerView: 1.3, spaceBetween: 20 },
-                    500: { slidesPerView: 1.8, spaceBetween: 20 },
+                    0: { slidesPerView: 1.8, spaceBetween: 20 },
+                    500: { slidesPerView: 3, spaceBetween: 20 },
                     1280: { slidesPerView: 3.1, spaceBetween: 30 },
                 }}
                 className="!overflow-visible"

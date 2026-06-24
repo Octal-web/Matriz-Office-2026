@@ -2,36 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\PostContactRequest;
+use App\Services\ContactService;
+
+use Illuminate\Http\RedirectResponse;
+
 use Inertia\Inertia;
 
-use App\Http\Requests\PostClientRequest;
-use App\Services\ClientService;
+use App\Models\Contato;
 
 class ContatoController extends Controller
 {
-    protected $clientService;
+    protected $contactService;
 
-    public function __construct(ClientService $clientService)
+    public function __construct(ContactService $contactService)
     {
         parent::__construct();
-        $this->clientService = $clientService;
+        $this->contactService = $contactService;
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function enviar(PostClientRequest $request) {
-        if($request->post()){
-            $data = $request->validated();
-        
-            $this->clientService->create($data);
-            return back()->with('message', [
-                'type' => 'success',
-                'msg' => 'Contato enviado com sucesso!',
-            ]);
+    public function enviar(PostContactRequest $request): RedirectResponse {
+        $data = $request->validated();
+
+        $result = $this->contactService->create($data);
+
+        $token = $result['contato']->token;
+
+        $parameters = array_filter([
+            'token' => $token,
+            'origin' => $data['origem'] ?? null,
+            'campaign' => $data['campanha'] ?? null,
+            'group' => $data['grupo'] ?? null,
+            'ad' => $data['anuncio'] ?? null,
+        ], fn ($value) => $value !== null && $value !== '');
+
+        return to_route('Contato.concluido', $parameters);
+    }
+
+    public function concluido(string $token)
+    {
+        $contato = Contato::query()
+            ->where([
+                'token' => $token,
+                'excluido' => null,
+            ])
+            ->first();
+
+        if (!$contato) {
+            return redirect()->route('Home.index');
         }
 
-        return Inertia::location(route('Home.index'));
+        $contato->token = null;
+        $contato->save();
+
+        return Inertia::render('CadastroConcluido');
     }
-};
+}
