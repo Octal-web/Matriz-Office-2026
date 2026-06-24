@@ -3,7 +3,7 @@ import { Reveal } from './Reveal';
 import { BrandCard } from './BrandCard';
 
 export const Brands = () => (
-    <section className="py-20 border-t border-neutral-800">
+    <section className="py-20 border-t border-neutral-800" id="marcas">
         <div className="container max-w-large">
             <div className="grid grid-cols-1 lg:grid-cols-[290px_1fr] gap-12 lg:gap-20">
 
