@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\PoliticasController;
+use App\Http\Controllers\SitemapController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +24,5 @@ Route::post('/contato/enviar', [ContatoController::class, 'enviar'])->name('Cont
 Route::get('/contato/cadastro-concluido/{token}', [ContatoController::class, 'concluido'])->name('Contato.concluido');
 
 Route::get('/politica-de-privacidade', [PoliticasController::class, 'privacidade'])->name('Politicas.privacidade');
+
+Route::get('/sitemap.xml', [SitemapController::class, '__invoke'])->name('Sitemap.index');
