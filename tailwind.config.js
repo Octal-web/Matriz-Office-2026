@@ -20,7 +20,7 @@ export default {
                 padding: '5%',
             },
             maxWidth: {
-                small: '58rem',
+                small: '64rem',
                 medium: '94rem',
                 large: '104rem',
             },

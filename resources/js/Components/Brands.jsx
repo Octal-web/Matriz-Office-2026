@@ -9,7 +9,7 @@ export const Brands = () => (
 
                 <Reveal direction="bottom">
                     <div className="">
-                        <h2 className="text-2xl sm:text-4xl font-semibold leading-snug mb-6">
+                        <h2 className="text-4xl font-semibold sm:leading-snug tracking-tight sm:tracking-normal mb-6">
                             Parcerias que Impulsionam <span className="text-primary">Excelência</span>
                         </h2>
                         <p className="text-neutral-500 text-sm leading-relaxed mb-8">

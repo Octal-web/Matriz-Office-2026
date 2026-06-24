@@ -3,7 +3,7 @@ import { Reveal } from './Reveal';
 
 export const BrandCard = ({ name, logo, highlight, description, url, index }) => (
     <Reveal direction="bottom" delay={index * 0.15}>
-        <div className="flex flex-col sm:flex-row gap-6 py-8 border-t border-neutral-800 group">
+        <div className="flex flex-col sm:flex-row gap-6 py-6 2xl:py-8 border-t border-neutral-800 group">
 
             <div className="shrink-0 w-full sm:w-40 flex items-center">
                 <img

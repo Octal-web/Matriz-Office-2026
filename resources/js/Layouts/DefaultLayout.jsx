@@ -8,13 +8,13 @@ import Lenis from 'lenis';
 
 import { CookieModal } from '@/Components/CookieModal';
 import { CustomLink } from '@/Components/CustomLink';
+import { ExitIntentModal } from '@/Components/ExitIntentModal';
 
 import { homeShowrooms } from '@/Data/homeShowrooms';
 
 const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corporativo em Goiânia e Palmas', description = 'A Matriz Office é especialista em mobiliário corporativo de alto padrão. Soluções completas para escritórios em Goiânia (GO) e Palmas (TO). Peça seu orçamento!' }) => {
-    const { controller, action, notifyCookie, rejectCookie } = usePage().props;
+    const { controller, action, notifyCookie, rejectCookie, modalShowCookie } = usePage().props;
 
-    const [isVisible, setIsVisible] = useState(true);
     const [isAtTop, setIsAtTop] = useState(true); 
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -47,14 +47,6 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
             const currentScrollY = window.scrollY;
             
             setIsAtTop(currentScrollY <= 140);
-            
-            if (!isMenuOpen) {
-                if (currentScrollY > 200) {
-                    setIsVisible(currentScrollY < lastScrollY);
-                } else {
-                    setIsVisible(true);
-                }
-            }
             
             setLastScrollY(currentScrollY);
         };
@@ -136,28 +128,28 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
                 <link rel="icon" href={`/favicon.ico`} type="image/x-icon" />
             </Head>
                 
-            <header className={`header fixed top-0 left-0 right-0 z-[20] transition-all duration-300 ease-in-out ${!isAtTop ? ' bg-black shadow-2xl shadow-black/10' : ''} ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-                <div className={`fixed inset-0 bg-black md:hidden duration-300 ease-out ${isMenuOpen ? 'opacity-30' : 'opacity-0 h-0'}`} onClick={() => {setIsMenuOpen(false)}}></div>
-                <div className="container max-w-x-large">
+            <header className={`header fixed top-0 left-0 right-0 z-[20] transition-all duration-300 ease-in-out ${!isAtTop || ['Contato', 'Politicas'].includes(controller) ? ' bg-black shadow-2xl shadow-black/10' : ''}`}>
+                <div className={`fixed inset-0 bg-black xl:hidden duration-300 ease-out ${isMenuOpen ? 'opacity-30' : 'opacity-0 h-0'}`} onClick={() => {setIsMenuOpen(false)}}></div>
+                <div className="container max-w-large">
                     <div className="flex items-center justify-between">
-                        <div className="relative z-[1] flex items-center justify-between w-full my-5 md:my-7 2xl:my-8">
+                        <div className="relative z-[1] flex items-center justify-between w-full my-5 xl:my-7 2xl:my-8">
                             <h1 className="flex items-center">
                                 <Link href={route('Home.index')} className="flex items-center">
-                                    <img src={logoWhite} alt="Logo" className="block max-w-30 md:max-w-50 lg:max-w-80" />
+                                    <img src={logoWhite} alt="Logo" className="block max-w-30 xl:max-w-50 lg:max-w-80" />
                                 </Link>
                             </h1>
 
-                            <button className={`fixed top-0 left-0 w-screen h-screen md:hidden bg-black transition-all  ${isMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'}`} aria-label="Close Menu" onClick={() => setIsMenuOpen(false)} />
+                            <button className={`fixed top-0 left-0 w-screen h-screen xl:hidden bg-black transition-all  ${isMenuOpen ? 'opacity-50' : 'opacity-0 pointer-events-none'}`} aria-label="Close Menu" onClick={() => setIsMenuOpen(false)} />
 
-                            <div className={`fixed md:relative bg-black bg-opacity-70 max-md:backdrop-blur-sm md:bg-transparent left-0 ${!isMenuOpen ? '-top-1 max-md:-translate-y-full' : 'top-0'} md:left-auto md:top-auto flex flex-col md:flex-row md:items-center justify-center md:justify-end w-full h-[calc(100vh_/6_*_5)] md:h-auto md:my-0.5 2xl:my-1.5 transition-all ease-out duration-500`}>
+                            <div className={`fixed xl:relative bg-black bg-opacity-70 max-xl:backdrop-blur-sm xl:bg-transparent left-0 ${!isMenuOpen ? '-top-1 max-xl:-translate-y-full' : 'top-0'} xl:left-auto xl:top-auto flex flex-col xl:flex-row xl:items-center justify-center xl:justify-end w-full h-[calc(100vh_/6_*_5)] xl:h-auto xl:my-0.5 2xl:my-1.5 transition-all ease-out duration-500`}>
                                 <nav className="relative">
-                                    <ul className="flex flex-col md:flex-row items-center md:justify-center gap-6 md:gap-2 xl:gap-10 relative lg:mr-5 2xl:mr-0">
+                                    <ul className="flex flex-col xl:flex-row items-center xl:justify-center gap-5 xl:gap-10 relative lg:mr-5 2xl:mr-0">
                                         {menuItems.map((item, index) => (
                                             <li key={index}>
                                                 {item.external ? (
                                                     <a
                                                         href={item.url}
-                                                        className="max-md:text-xl text-white font-medium transition-all hover:opacity-80"
+                                                        className="text-lg xl:text-base text-white font-medium transition-all hover:opacity-80"
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         aria-label={item.name}
@@ -168,7 +160,7 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
                                                     <CustomLink
                                                         href={route(item.route)}
                                                         to={item.to}
-                                                        className="max-md:text-xl text-white font-medium transition-all hover:opacity-80"
+                                                        className="text-lg xl:text-base text-white font-medium transition-all hover:opacity-80"
                                                         onClick={() => setIsMenuOpen(false)}
                                                         aria-label={item.name}
                                                     >
@@ -179,38 +171,38 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
                                         ))}
 
                                         <li
-                                            className="max-md:opacity-0 max-md:translate-y-[-20px]"
-                                            style={typeof window !== 'undefined' && window.innerWidth < 768 ? {
+                                            className="max-xl:opacity-0 max-xl:translate-y-[-20px]"
+                                            style={typeof window !== 'undefined' && window.innerWidth < 1280 ? {
                                                 opacity: isMenuOpen ? 1 : 0,
                                                 transform: isMenuOpen ? 'translateY(0)' : 'translateY(-20px)',
                                                 transition: `opacity 0.4s ease-out ${menuItems.length * 0.1}s, transform 0.4s ease-out ${menuItems.length * 0.1}s`
                                             } : {}}
                                         >
-                                            <CustomLink href={route('Home.index')} to="#orcamento" className="lg:mx-4 bg-black font-medium text-center text-white px-6 py-2 min-w-40 sm:min-w-44 transition-all hover:bg-white hover:text-black">Peça seu Orçamento</CustomLink>
+                                            <CustomLink href={route('Home.index')} to="#orcamento" className="block xl:mx-4 bg-white text-lg xl:text-base font-medium text-center text-black px-5 xl:px-6 py-1.5 min-w-40 sm:min-w-44 transition-all xl:hover:bg-black xl:hover:text-white">Peça seu Orçamento</CustomLink>
                                         </li>
                                     </ul>
                                 </nav>
                             </div>
 
-                            <button className="md:hidden relative z-[2]" onClick={toggleMenu} aria-label="Toggle Menu">
+                            <button className="xl:hidden relative z-[2]" onClick={toggleMenu} aria-label="Toggle Menu">
                                 <div className="flex items-center">
                                     <div className="relative w-7 h-[21px]">
                                         <div
-                                            className={`absolute top-0 bg-black h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? 'rotate-45 !top-[10px] bg-white' : 'bg-black'}`}
+                                            className={`absolute top-0 bg-white h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? 'rotate-45 !top-[10px]' : ''}`}
                                             style={{
                                                 transitionDelay: isMenuOpen ? '0ms, 400ms' : '0ms',
                                                 transitionProperty: 'top, transform'
                                             }}
                                         ></div>
                                         <div
-                                            className={`absolute top-[9px] h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? 'scale-x-0 !top-[10px] bg-white' : 'bg-black'}`}
+                                            className={`absolute top-[9px] bg-white h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? 'scale-x-0 !top-[10px]' : ''}`}
                                             style={{
                                                 transitionDelay: isMenuOpen ? '0ms, 400ms' : '0ms',
                                                 transitionProperty: 'top, transform'
                                             }}
                                         ></div>
                                         <div
-                                            className={`absolute bottom-0 bg-black h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? '-rotate-45 bottom-[9px] bg-white' : 'bg-black'}`}
+                                            className={`absolute bottom-0 bg-white h-[2px] w-7 transition-all duration-300 ${isMenuOpen ? '-rotate-45 bottom-[9px]' : ''}`}
                                             style={{
                                                 transitionDelay: isMenuOpen ? '0ms, 400ms' : '0ms',
                                                 transitionProperty: 'bottom, transform'
@@ -295,7 +287,7 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
                 </div>
 
                 <div className="border-t border-white/10">
-                    <div className="container max-w-large flex flex-col gap-3 pt-5 text-xs text-neutral-500 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="container max-w-large flex flex-col gap-3 pt-5 text-xs text-neutral-400 sm:flex-row sm:items-center sm:justify-between">
                         <p>© { new Date().getFullYear() } Matriz Office. Todos os direitos reservados.</p>
 
                         <div className="flex flex-wrap gap-x-5 gap-y-2">
@@ -310,6 +302,8 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
             {!notifyCookie || !rejectCookie ? (
                 <CookieModal acceptCookies={acceptCookies} visible={notifyCookie ? false : true} />
             ) : null}
+
+            <ExitIntentModal modalCookie={modalShowCookie} />
         </>
     );
 };

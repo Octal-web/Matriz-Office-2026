@@ -38,13 +38,13 @@ export const ShowroomCard = ({ tag, building, address, mapUrl, description, imag
                 </span>
             </div>
 
-            <div className="flex flex-col flex-1 p-6 gap-4">
+            <div className="flex flex-col flex-1 p-5 2xl:p-6 gap-3 2xl:gap-4">
                 <div>
                     <p className="text-neutral-500 text-xs tracking-widest uppercase mb-1">{building}</p>
                     <p className="text-neutral-300 text-sm leading-relaxed whitespace-pre-line">{address}</p>
                 </div>
 
-                <p className="text-neutral-400 text-sm leading-relaxed flex-1">
+                <p className="text-neutral-400 text-sm xl:leading-relaxed flex-1">
                     {description}
                 </p>
 

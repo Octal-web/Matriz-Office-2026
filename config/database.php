@@ -64,6 +64,21 @@ return [
             ]) : [],
         ],
 
+        '8poroito' => [
+            'driver' => 'mysql',
+            'host' => env('8POROITO_DB_HOST', '127.0.0.1'),
+            'port' => env('8POROITO_DB_PORT', '3306'),
+            'database' => env('8POROITO_DB_DATABASE', '8poroito'),
+            'username' => env('8POROITO_DB_USERNAME', 'root'),
+            'password' => env('8POROITO_DB_PASSWORD', ''),
+            'unix_socket' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

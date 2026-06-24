@@ -8,7 +8,7 @@ export const CustomLink = ({ href, to, children, className, closeOnClick = false
 
         const fullUrl = new URL(href, window.location.origin).href;
         const currentUrl = window.location.origin + window.location.pathname;
-
+        
         if (fullUrl === currentUrl) {
             const hash = to;
             

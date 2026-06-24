@@ -1,24 +1,57 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, usePage } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
 
-import AnimatedCheckMark from './AnimatedCheckMark';
+import { InputMask } from '@react-input/mask';
 
-export const ProjectForm = ({
-    submitRoute = 'Contato.enviar',
-    privacyUrl = '/politica-de-privacidade',
-    buttonLabel = 'BAIXAR CATÁLOGO',
-}) => {
-    const { message } = usePage().props;
-    const [isSuccessful, setIsSuccessful] = useState(false);
+export const ProjectForm = ({ submitRoute = 'Contato.enviar', privacyUrl = '/politica-de-privacidade', buttonLabel = 'BAIXAR CATÁLOGO' }) => {
+    const [phoneMask, setPhoneMask] = useState("(__) ____-____");
 
     const { data, setData, post, processing, errors, clearErrors, reset } = useForm({
         nome: '',
         telefone: '',
         email: '',
         cep: '',
-        conteudos: false,
+        newsletter: false,
         politica: false,
+
+        origem: '',
+        campanha: '',
+        grupo: '',
+        anuncio: '',
+        entrada: '',
+        posicao_formulario: 'Rodapé',
     });
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+
+        setData((data) => ({
+            ...data,
+            origem: params.get('origin') || params.get('utm_source') || '',
+            campanha: params.get('campaign') || params.get('utm_campaign') || '',
+            grupo: params.get('group') || params.get('utm_term') || '',
+            anuncio: params.get('ad') || params.get('utm_content') || '',
+        }));
+        
+        const now = new Date();
+        now.setHours(now.getHours() - 3);
+        const entrada = now.toISOString().slice(0, 19).replace('T', ' ');
+        
+        setData(prevData => ({
+            ...prevData,
+            entrada: entrada
+        }));
+    }, []);
+    
+    useEffect(() => {
+        const numbers = data.telefone.replace(/\D/g, '');
+        
+        if (numbers.length >= 10) {
+            setPhoneMask("(__) _____-____");
+        } else if (numbers.length < 10) {
+            setPhoneMask("(__) ____-____");
+        }
+    }, [data.telefone]);
 
     const handleChange = (event) => {
         const { name, value, type, checked } = event.target;
@@ -35,19 +68,6 @@ export const ProjectForm = ({
         });
     };
 
-    useEffect(() => {
-        if (message?.type !== 'success') return;
-
-        setIsSuccessful(true);
-        reset();
-
-        const timeout = setTimeout(() => {
-            setIsSuccessful(false);
-        }, 3000);
-
-        return () => clearTimeout(timeout);
-    }, [message]);
-
     const inputClassName = `
         w-full h-11 rounded-full border border-neutral-300 bg-white px-5
         text-sm text-neutral-900 placeholder:text-neutral-400
@@ -62,7 +82,7 @@ export const ProjectForm = ({
     );
 
     return (
-        <section className="bg-neutral-100 py-14">
+        <section className="bg-neutral-100 py-14 scroll-mt-24" id="orcamento">
             <div className="container max-w-medium">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:items-center lg:gap-16 xl:gap-24">
                     <div className="max-w-xl">
@@ -78,7 +98,7 @@ export const ProjectForm = ({
                     <div>
                         <form
                             onSubmit={handleSubmit}
-                            className="relative rounded-sm bg-white p-6 shadow-sm sm:p-8 lg:p-10 max-w-md mx-auto"
+                            className="relative rounded-sm bg-white p-6 shadow-sm max-sm:py-10 sm:p-8 lg:p-10 max-w-md mx-auto"
                             noValidate
                         >
                             <div className="flex flex-col gap-4">
@@ -100,10 +120,12 @@ export const ProjectForm = ({
 
                                 <div>
                                     <label htmlFor="telefone" className="sr-only">Telefone</label>
-                                    <input
+                                    <InputMask
                                         id="telefone"
                                         type="tel"
                                         name="telefone"
+                                        mask={phoneMask}
+                                        replacement={{ _: /\d/ }}
                                         value={data.telefone}
                                         onChange={handleChange}
                                         placeholder="(XX) 99999-9999"
@@ -154,8 +176,8 @@ export const ProjectForm = ({
                                         <span className="relative mt-0.5 flex shrink-0">
                                             <input
                                                 type="checkbox"
-                                                name="conteudos"
-                                                checked={data.conteudos}
+                                                name="newsletter"
+                                                checked={data.newsletter}
                                                 onChange={handleChange}
                                                 className="peer size-5 appearance-none rounded-sm border-2 border-neutral-700 bg-white outline-none ring-0 transition-colors checked:border-primary checked:bg-primary focus:ring-0 focus:ring-offset-0"
                                             />
@@ -168,7 +190,7 @@ export const ProjectForm = ({
                                             Sim, quero receber <strong className="font-semibold text-neutral-900">conteúdos exclusivos</strong> da Matriz Office
                                         </span>
                                     </label>
-                                    <ErrorMessage field="conteudos" />
+                                    <ErrorMessage field="newsletter" />
                                 </div>
 
                                 <div>
@@ -216,16 +238,6 @@ export const ProjectForm = ({
                                     buttonLabel
                                 )}
                             </button>
-
-                            {isSuccessful && (
-                                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-sm bg-white px-6 text-center">
-                                    <AnimatedCheckMark />
-                                    <h3 className="mt-4 text-2xl font-semibold text-neutral-900">Solicitação enviada!</h3>
-                                    <p className="mt-2 max-w-sm text-sm leading-relaxed text-neutral-600">
-                                        Recebemos seus dados e entraremos em contato em breve.
-                                    </p>
-                                </div>
-                            )}
                         </form>
                     </div>
                 </div>

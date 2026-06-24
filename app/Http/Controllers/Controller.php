@@ -16,12 +16,14 @@ abstract class Controller
 
         $notifyCookie = array_key_exists('notify-cookies', $_COOKIE) ? true : false;
         $rejectCookie = array_key_exists('reject-cookies', $_COOKIE) ? true : false;
+        $modalShowCookie = array_key_exists('matrizExitModalShown', $_COOKIE) ? true : false;
 
         Inertia::share([
             'controller' => $controller,
             'action' => $action,
             'notifyCookie' => $notifyCookie,
             'rejectCookie' => $rejectCookie,
+            'modalShowCookie' => $modalShowCookie,
         ]);
         
     }
