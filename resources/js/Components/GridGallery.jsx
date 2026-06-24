@@ -34,7 +34,7 @@ export const GridGallery = () => {
                     </div>
                 </Reveal>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[180px] sm:auto-rows-[210px] xl:auto-rows-[270px] 2xl:auto-rows-[300px] gap-2 xl:gap-5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[165px] sm:auto-rows-[210px] xl:auto-rows-[270px] 2xl:auto-rows-[300px] gap-2 xl:gap-5">
                     {homeGridPhotos.map((photo, index) => (
                         <PhotoShared
                             key={index}

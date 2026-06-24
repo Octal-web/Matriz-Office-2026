@@ -11,9 +11,10 @@ import { CustomLink } from '@/Components/CustomLink';
 import { ExitIntentModal } from '@/Components/ExitIntentModal';
 
 import { homeShowrooms } from '@/Data/homeShowrooms';
+import { homeDoubts } from '@/Data/homeDoubts';
 
 const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corporativo em Goiânia e Palmas', description = 'A Matriz Office é especialista em mobiliário corporativo de alto padrão. Soluções completas para escritórios em Goiânia (GO) e Palmas (TO). Peça seu orçamento!' }) => {
-    const { controller, action, notifyCookie, rejectCookie, modalShowCookie } = usePage().props;
+    const { controller, notifyCookie, rejectCookie, modalShowCookie } = usePage().props;
 
     const [isAtTop, setIsAtTop] = useState(true); 
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -45,9 +46,7 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
-            
             setIsAtTop(currentScrollY <= 140);
-            
             setLastScrollY(currentScrollY);
         };
         
@@ -65,38 +64,109 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
         setTrackingEnabled(true);
     };
     
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //         if (notifyCookie || trackingEnabled) {
-    //             const script = document.createElement('script');
-    //             script.innerHTML = `
-    //                 (function(w,d,s,l,i){
-    //                     w[l]=w[l]||[];
-    //                     w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
-    //                     var f=d.getElementsByTagName(s)[0],
-    //                         j=d.createElement(s),
-    //                         dl=l!='dataLayer'?'&l='+l:'';
-    //                     j.async=true;
-    //                     j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-    //                     f.parentNode.insertBefore(j,f);
-    //                 })(window,document,'script','dataLayer','${dados_site.tag_google}');
-    //             `;
-    //             document.head.appendChild(script);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (notifyCookie || trackingEnabled) {
+                const script = document.createElement('script');
+                script.innerHTML = `
+                    (function(w,d,s,l,i){
+                        w[l]=w[l]||[];
+                        w[l].push({'gtm.start': new Date().getTime(), event:'gtm.js'});
+                        var f=d.getElementsByTagName(s)[0],
+                            j=d.createElement(s),
+                            dl=l!='dataLayer'?'&l='+l:'';
+                        j.async=true;
+                        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+                        f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer','GTM-WQCW52GK');
+                `;
+                document.head.appendChild(script);
 
-    //             const noscript = document.createElement('noscript');
-    //             noscript.innerHTML = `
-    //                 <iframe src="https://www.googletagmanager.com/ns.html?id=${dados_site.tag_google}" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    //             `;
-    //             document.body.appendChild(noscript);
+                const noscript = document.createElement('noscript');
+                noscript.innerHTML = `
+                    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WQCW52GK" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                `;
+                document.body.appendChild(noscript);
+            }
+        }, 100);
+        
+        return () => clearTimeout(timer);
+    }, [notifyCookie, trackingEnabled]);
 
-    //             window.dataLayer = window.dataLayer || [];
-    //             window.dataLayer.push({
-    //                 event: "ab_test_group",
-    //                 ab_group: abGroup,
-    //             });
-    //         }
-    //     }, 100);
-    // }, [notifyCookie, trackingEnabled]);
+    // Schema: LocalBusiness
+    const localBusinessSchema = {
+        "@context": "https://schema.org",
+        "@type": ["LocalBusiness", "FurnitureStore"],
+        "name": "Matriz Office",
+        "description": "Especialistas em mobiliário corporativo de alto padrão para escritórios.",
+        "url": window.location.origin,
+        "logo": {
+            "@type": "ImageObject",
+            "url": `${window.location.origin}/site/img/logo.png`
+        },
+        "image": `${window.location.origin}/content/display/main-bg.jpg`,
+        "email": "contato@matrizoffice.com.br",
+        "priceRange": "$$",
+        "sameAs": [],
+        "address": homeShowrooms.map(s => ({
+            "@type": "PostalAddress",
+            "addressLocality": s.city,
+            "addressRegion": s.state,
+            "addressCountry": "BR",
+            "streetAddress": s.address.replace('\n', ', ')
+        })),
+        "contactPoint": homeShowrooms.map(s => ({
+            "@type": "ContactPoint",
+            "telephone": s.phone,
+            "contactType": "customer service",
+            "areaServed": s.city,
+            "availableLanguage": "Portuguese"
+        })),
+        "hasMap": homeShowrooms.map(s => s.mapUrl),
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "08:00",
+                "closes": "18:00"
+            }
+        ]
+    };
+
+    // Schema: FAQPage
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": homeDoubts.map(item => ({
+            "@type": "Question",
+            "name": item.title,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.text
+            }
+        }))
+    };
+
+    // Schema: Organization
+    const organizationSchema = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Matriz Office",
+        "url": window.location.origin,
+        "logo": {
+            "@type": "ImageObject",
+            "url": `${window.location.origin}/site/img/logo.png`
+        },
+        "email": "contato@matrizoffice.com.br",
+        "contactPoint": homeShowrooms.map(s => ({
+            "@type": "ContactPoint",
+            "telephone": s.phone,
+            "contactType": "customer service",
+            "areaServed": s.city,
+            "availableLanguage": "Portuguese"
+        })),
+        "sameAs": []
+    };
 
     const menuItems = [
         { name: "A Matriz Office", route: "Home.index", to: "#sobre", label: "Saiba mais sobre a Matriz Office", external: false },
@@ -112,20 +182,30 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
                 <meta name="description" content={description} />
 
                 <meta property="og:url" content={window.location.pathname} />
-                <meta property="og:type" content="website"/>
+                <meta property="og:type" content="website" />
                 <meta property="og:title" content={title} />
                 <meta property="og:description" content={description} />
-                <meta property="og:image" content="/assets/preview.jpg" />
+                <meta property="og:image" content="/content/display/main-bg.jpg" />
 
-                <meta name="robots" content="index, follow"/>
+                <meta name="robots" content="index, follow" />
                 <meta name="author" content="Octal Web" />
-                
+
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={title} />
                 <meta name="twitter:description" content={description || ''} />
-                <meta name="twitter:image" content="/assets/preview.jpg" />
+                <meta name="twitter:image" content="/content/display/main-bg.jpg" />
 
-                <link rel="icon" href={`/favicon.ico`} type="image/x-icon" />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
+                <script type="application/ld+json">
+                    {JSON.stringify(localBusinessSchema)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(faqSchema)}
+                </script>
+                <script type="application/ld+json">
+                    {JSON.stringify(organizationSchema)}
+                </script>
             </Head>
                 
             <header className={`header fixed top-0 left-0 right-0 z-[20] transition-all duration-300 ease-in-out ${!isAtTop || ['Contato', 'Politicas'].includes(controller) ? ' bg-black shadow-2xl shadow-black/10' : ''}`}>
