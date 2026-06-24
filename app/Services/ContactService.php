@@ -36,12 +36,12 @@ class ContactService
                 posicaoFormulario: $data['posicao_formulario'] ?? null,
             );
             
-            // $email = $this->sendEmail($data);
+            $email = $this->sendEmail($data);
 
             return [
                 'contato' => $contato,
                 'lead' => $lead,
-                // 'email' => $email,
+                'email' => $email,
             ];
         });
     }

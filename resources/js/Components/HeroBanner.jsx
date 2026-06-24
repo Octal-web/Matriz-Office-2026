@@ -123,14 +123,24 @@ export const HeroBanner = () => {
                     >
                         <p>A Matriz Office desenvolve soluções completas para ambientes corporativos, unindo mobiliário, planejamento de espaços e personalização para criar escritórios mais funcionais, produtivos e alinhados à realidade de cada empresa.</p>
                     </div>
-
-                    <CustomLink
-                        href={route('Home.index')}
-                        to="#solucoes"
-                        className="w-fit py-3 sm:py-4 px-8 sm:px-11 bg-transparent border border-primary text-white text-sm font-semibold uppercase sm:tracking-wider transition-colors duration-300 hover:bg-primary hover:text-black"
-                    >
-                        Conheça nossas soluções
-                    </CustomLink>
+                    
+                    <div className="flex flex-wrap gap-4 sm:gap-6">
+                        <CustomLink
+                            href={route('Home.index')}
+                            to="#solucoes"
+                            className="w-full max-w-xs py-3 sm:py-4 px-8 bg-transparent border border-primary text-white text-sm text-center font-semibold uppercase sm:tracking-wider transition-colors duration-300 hover:bg-primary hover:text-black"
+                        >
+                            Conheça nossas soluções
+                        </CustomLink>
+                        
+                        <CustomLink
+                            href={route('Home.index')}
+                            to="#orcamento"
+                            className="w-full max-w-xs py-3 sm:py-4 px-8 bg-white border border-white text-sm text-center font-semibold uppercase sm:tracking-wider text-black transition-colors duration-300 hover:border-black hover:bg-black hover:text-white"
+                        >
+                            Peça seu Orçamennto
+                        </CustomLink>
+                    </div>
                 </div>
             </div>
         </section>
