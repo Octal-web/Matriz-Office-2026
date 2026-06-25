@@ -1,4 +1,3 @@
-```md
 # Matriz Office
 
 > Especialista em mobiliário corporativo, ergonomia e projetos completos para escritórios, com showrooms em Goiânia (GO) e Palmas (TO).
@@ -37,4 +36,3 @@ A Matriz Office desenvolve soluções para ambientes corporativos, unindo planej
 - Principais parceiros: Bortolini e Cavaletti.
 - Público atendido: empresas, escritórios, indústrias, cooperativas, hospitais, instituições de ensino, órgãos públicos e centros empresariais.
 - Idioma principal do site: português do Brasil.
-```
