@@ -35,6 +35,8 @@ class ContactService
                 horaEntrada: $data['entrada'] ?? null,
                 posicaoFormulario: $data['posicao_formulario'] ?? null,
             );
+
+            $data['cidade'] = $contato->cidade;
             
             $email = $this->sendEmail($data);
 
