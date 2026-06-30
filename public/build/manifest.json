@@ -1,6 +1,6 @@
 {
-  "_DefaultLayout-BLmKJR0S.js": {
-    "file": "assets/DefaultLayout-BLmKJR0S.js",
+  "_DefaultLayout-DH0s48gQ.js": {
+    "file": "assets/DefaultLayout-DH0s48gQ.js",
     "name": "DefaultLayout",
     "imports": [
       "resources/js/app.jsx"
@@ -11,40 +11,40 @@
     ]
   },
   "resources/js/Pages/CadastroConcluido.jsx": {
-    "file": "assets/CadastroConcluido-PFjFvuOb.js",
+    "file": "assets/CadastroConcluido-DkgZ94fI.js",
     "name": "CadastroConcluido",
     "src": "resources/js/Pages/CadastroConcluido.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-BLmKJR0S.js"
+      "_DefaultLayout-DH0s48gQ.js"
     ]
   },
   "resources/js/Pages/Home.jsx": {
-    "file": "assets/Home-DJIAL9Om.js",
+    "file": "assets/Home-DKjWmRnt.js",
     "name": "Home",
     "src": "resources/js/Pages/Home.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-BLmKJR0S.js"
+      "_DefaultLayout-DH0s48gQ.js"
     ],
     "css": [
       "assets/Home-B6grfV6A.css"
     ]
   },
   "resources/js/Pages/PoliticaPrivacidade.jsx": {
-    "file": "assets/PoliticaPrivacidade-DKxfdZy4.js",
+    "file": "assets/PoliticaPrivacidade-B-NB_MkE.js",
     "name": "PoliticaPrivacidade",
     "src": "resources/js/Pages/PoliticaPrivacidade.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-BLmKJR0S.js"
+      "_DefaultLayout-DH0s48gQ.js"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-nrRXrpA1.js",
+    "file": "assets/app-Bc0hek3J.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
@@ -54,7 +54,7 @@
       "resources/js/Pages/PoliticaPrivacidade.jsx"
     ],
     "css": [
-      "assets/app-BP7g2fNh.css"
+      "assets/app-Dlg7Fh2r.css"
     ]
   },
   "resources/js/assets/logo-footer.png": {

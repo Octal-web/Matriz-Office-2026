@@ -17,7 +17,7 @@ const Page = () => {
             <GridGallery />
             <Solutions />
             <Showrooms />
-            <Brands />
+            {/* <Brands /> */}
             <ProjectForm />
             <DoubtsList />
         </DefaultLayout>
