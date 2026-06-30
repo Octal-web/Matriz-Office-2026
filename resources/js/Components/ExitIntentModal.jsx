@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 export const ExitIntentModal = ({ modalCookie, cookieName = 'matrizExitModalShown', cookieDuration = 1, formId = 'orcamento'}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
+    const [hasShown, setHasShown] = useState(false);
 
     const closeButtonRef = useRef(null);
     const closeTimeoutRef = useRef(null);
@@ -36,6 +37,7 @@ export const ExitIntentModal = ({ modalCookie, cookieName = 'matrizExitModalShow
         previousActiveElementRef.current = document.activeElement;
 
         setCookie(cookieName, 'true', cookieDuration);
+        setHasShown(true);
         setIsOpen(true);
         setIsClosing(false);
     };
@@ -61,7 +63,7 @@ export const ExitIntentModal = ({ modalCookie, cookieName = 'matrizExitModalShow
                 event.clientY <= 0 &&
                 event.relatedTarget === null;
 
-            if (leftFromTop && !modalCookie) {
+            if (leftFromTop && !modalCookie && !hasShown) {
                 openModal();
             }
         };
@@ -74,7 +76,7 @@ export const ExitIntentModal = ({ modalCookie, cookieName = 'matrizExitModalShow
                 handleMouseOut
             );
         };
-    }, [cookieName, cookieDuration, modalCookie]);
+    }, [cookieName, cookieDuration, modalCookie, hasShown]);
 
     useEffect(() => {
         if (!isOpen) {
