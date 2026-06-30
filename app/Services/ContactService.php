@@ -134,7 +134,7 @@ class ContactService
         });
 
         Mail::send('emails.lead', $data, function($message)use($data) {
-            $message->from('noreply@bortolini.com.br', 'Matriz Office')
+            $message->from('noreply@matrizoffice.com.br', 'Matriz Office')
                     ->to(['marketing1@matrizoffice.com.br', 'contato@matrizoffice.com.br', 'vendasgo@matrizoffice.com.br'])
                     ->bcc('rafael@8poroito.com.br')
                     ->subject('Um novo prospect de contato se cadastrou através da Landing Page');
