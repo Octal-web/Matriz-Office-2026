@@ -35,7 +35,7 @@ export const Solutions = () => {
 
                 <div className="flex flex-wrap justify-center gap-3 sm:gap-8 mt-8 sm:mt-12 mb-20 2xl:mb-30">
                     {homeSolutions.map((solution, index) => (
-                        <div key={index} ref={(el) => (cardsRef.current[index] = el)} className="w-[calc(50%-0.375rem)] sm:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)] lg:w-[calc(20%-1.6rem)] bg-white/10 py-5 px-2 sm:p-6 transition-colors duration-300">
+                        <div key={index} ref={(el) => (cardsRef.current[index] = el)} className="w-[calc(50%-0.375rem)] sm:w-[calc(33.333%-1.5rem)] lg:w-[calc(25%-1.5rem)] xl:w-[calc(20%-1.6rem)] bg-white/10 py-5 px-2 sm:p-6 transition-colors duration-300">
                             <div className="mx-10">
                                 <img src={solution.src} alt={solution.name} className="w-full h-auto mb-2 2xl:mb-4" />
                             </div>
