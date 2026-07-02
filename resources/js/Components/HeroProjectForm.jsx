@@ -167,8 +167,10 @@ export const HeroProjectForm = ({
                         CEP
                     </label>
 
-                    <input
+                    <InputMask
                         id={`${fieldPrefix}-cep`}
+                        mask="_____-___"
+                        replacement={{ _: /\d/ }}
                         type="text"
                         name="cep"
                         value={data.cep}

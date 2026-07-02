@@ -37,6 +37,7 @@ class ContactService
             );
 
             $data['cidade'] = $contato->cidade;
+            $data['email'] = $contato->email;
             
             $email = $this->sendEmail($data);
 
@@ -79,7 +80,7 @@ class ContactService
         return [
             'nome' => $data['nome'],
             'telefone' => $data['telefone'],
-            'email' => $data['email'],
+            'email' => $data['email'] ?? null,
             'cep' => preg_replace('/[^0-9]/', '', $data['cep']),
             'uf' => $cepData['uf'] ?? null,
             'endereco' => $cepData['logradouro'] ?? null,
@@ -89,8 +90,12 @@ class ContactService
         ];
     }
 
-    protected function countConversions(string $email): int
+    protected function countConversions(?string $email): int
     {
+        if (!$email) {
+            return 0;
+        }
+
         return Lead::query()
             ->where([
                 'email' => $email,
@@ -128,12 +133,14 @@ class ContactService
 
     protected function sendEmail(array $data): void
     {
-        Mail::send('emails.contact', $data, function($message)use($data) {
-            $message->from('noreply@matrizoffice.com.br', 'Matriz Office')
-                    ->to($data['email'])
-                    ->bcc('rafael@8poroito.com.br')
-                    ->subject('[Matriz Office] Entraremos em contato com você logo em seguida');
-        });
+        if (!empty($data['email'])) {
+            Mail::send('emails.contact', $data, function($message)use($data) {
+                $message->from('noreply@matrizoffice.com.br', 'Matriz Office')
+                        ->to($data['email'])
+                        ->bcc('rafael@8poroito.com.br')
+                        ->subject('[Matriz Office] Entraremos em contato com você logo em seguida');
+            });
+        }
 
         Mail::send('emails.lead', $data, function($message)use($data) {
             $message->from('noreply@matrizoffice.com.br', 'Matriz Office')

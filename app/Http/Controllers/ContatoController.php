@@ -26,6 +26,7 @@ class ContatoController extends Controller
      */
     public function enviar(PostContactRequest $request): RedirectResponse {
         $data = $request->validated();
+        $data['email'] = $data['email'] ?? null;
 
         $result = $this->contactService->create($data);
 
