@@ -24,7 +24,7 @@ class PostContactRequest extends FormRequest
         return [
             'nome'  => 'required',
             'telefone'  => 'required|celular_com_ddd',
-            'email'  => 'required|email',
+            'email'  => 'nullable|email',
             'cep' => 'required|formato_cep',
             'politica' => 'required|accepted',
             'entrada' => 'nullable',
@@ -49,7 +49,6 @@ class PostContactRequest extends FormRequest
             'nome.required'  => 'Por favor, informe seu nome.',
             'telefone.required'  => 'Por favor, informe seu telefone.',
             'telefone.celular_com_ddd' => 'Por favor, informe um telefone válido.',
-            'email.required'  => 'Por favor, informe seu e-mail.',
             'email.email' => 'Por favor, informe um e-mail válido.',
             'cep.required'  => 'Por favor, informe seu CEP.',
             'cep.formato_cep'  => 'Por favor, informe um CEP válido.',
@@ -61,6 +60,7 @@ class PostContactRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
+            'email' => $this->filled('email') ? $this->input('email') : null,
             'origem' => $this->input('origem', $this->input('utm_source')),
             'campanha' => $this->input('campanha', $this->input('utm_campaign')),
             'grupo' => $this->input('grupo', $this->input('utm_term')),

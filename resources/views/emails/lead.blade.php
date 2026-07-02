@@ -62,7 +62,9 @@
 
 																										<p style="margin:0;padding:0px;color:#4a2f25;font-style:normal;font-size:16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-weight:400;line-height:27px;text-decoration:none;text-transform:none;display:block;">Nome: {{ $nome }}</p>
 																										<p style="margin:0;padding:0px;color:#4a2f25;font-style:normal;font-size:16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-weight:400;line-height:27px;text-decoration:none;text-transform:none;display:block;">Telefone: {{ $telefone }}</p>
+																										@if(!empty($email))
 																										<p style="margin:0;padding:0px;color:#4a2f25;font-style:normal;font-size:16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-weight:400;line-height:27px;text-decoration:none;text-transform:none;display:block;">E-mail: {{ $email }}</p>
+																										@endif
 																										<p style="margin:0;padding:0px;color:#4a2f25;font-style:normal;font-size:16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-weight:400;line-height:27px;text-decoration:none;text-transform:none;display:block;">Cidade: {{ $cidade }}</p>
 																										{{-- <p style="margin:0;padding:0px;color:#4a2f25;font-style:normal;font-size:16px;font-family:'Inter',Helvetica,Arial,sans-serif;font-weight:400;line-height:27px;text-decoration:none;text-transform:none;display:block;">Mensagem: {{ $mensagem }}</p> --}}
 																										@if($newsletter == 1)

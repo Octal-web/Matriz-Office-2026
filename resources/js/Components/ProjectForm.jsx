@@ -154,8 +154,10 @@ export const ProjectForm = ({ submitRoute = 'Contato.enviar', privacyUrl = '/pol
 
                                 <div>
                                     <label htmlFor="cep" className="sr-only">CEP</label>
-                                    <input
+                                    <InputMask
                                         id="cep"
+                                        mask="_____-___"
+                                        replacement={{ _: /\d/ }}
                                         type="text"
                                         name="cep"
                                         value={data.cep}
