@@ -172,7 +172,7 @@ const DefaultLayout = ({ children, title = 'Matriz Office – Mobiliário Corpor
         { name: "A Matriz Office", route: "Home.index", to: "#sobre", label: "Saiba mais sobre a Matriz Office", external: false },
         { name: "Nossas Soluções", route: "Home.index", to: "#solucoes", label: "Confira nossas soluções", external: false },
         { name: "Onde Encontrar", route: "Home.index", to: "#onde-encontrar", label: "Onde encontrar a Matriz Office", external: false },
-        { name: "Parceiros", route: "Home.index", to: "#parceiros", label: "Parceiros da Matriz Office", external: false },
+        // { name: "Parceiros", route: "Home.index", to: "#parceiros", label: "Parceiros da Matriz Office", external: false },
     ];
 
     return (
