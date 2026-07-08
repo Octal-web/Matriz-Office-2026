@@ -1,11 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { homeGridPhotos } from '@/Data/homeGridPhotos';
 import { PhotoShared } from './PhotoShared';
 import { Reveal } from './Reveal';
-
-import Lightbox from 'yet-another-react-lightbox';
-import Zoom from 'yet-another-react-lightbox/plugins/zoom';
-import 'yet-another-react-lightbox/styles.css';
 
 const GRID_CLASSES = [
     'col-span-1 row-span-2',
@@ -17,8 +13,40 @@ const GRID_CLASSES = [
 
 export const GridGallery = () => {
     const [lightboxIndex, setLightboxIndex] = useState(-1);
+    const [LightboxComponent, setLightboxComponent] = useState(null);
+    const [ZoomPlugin, setZoomPlugin] = useState(null);
 
-    const slides = homeGridPhotos.map((photo) => ({ src: photo.full }));
+    const slides = useMemo(
+        () => homeGridPhotos.map((photo) => ({ src: photo.full })),
+        []
+    );
+
+    useEffect(() => {
+        let cancelled = false;
+
+        const loadLightbox = async () => {
+            if (lightboxIndex < 0 || LightboxComponent) {
+                return;
+            }
+
+            const [lightboxModule, zoomModule] = await Promise.all([
+                import('yet-another-react-lightbox'),
+                import('yet-another-react-lightbox/plugins/zoom'),
+                import('yet-another-react-lightbox/styles.css'),
+            ]);
+
+            if (!cancelled) {
+                setLightboxComponent(() => lightboxModule.default);
+                setZoomPlugin(() => zoomModule.default);
+            }
+        };
+
+        loadLightbox();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [lightboxIndex, LightboxComponent]);
 
     return (
         <section className="bg-neutral-200 py-20">
@@ -48,15 +76,17 @@ export const GridGallery = () => {
                 </div>
             </div>
 
-            <Lightbox
-                open={lightboxIndex >= 0}
-                index={lightboxIndex}
-                close={() => setLightboxIndex(-1)}
-                slides={slides}
-                styles={{ container: { backgroundColor: 'rgba(0, 0, 0, 0.8)' } }}
-                plugins={[Zoom]}
-                zoom={{ maxZoomPixelRatio: 1.5, scrollToZoom: true }}
-            />
+            {LightboxComponent && ZoomPlugin && (
+                <LightboxComponent
+                    open={lightboxIndex >= 0}
+                    index={lightboxIndex}
+                    close={() => setLightboxIndex(-1)}
+                    slides={slides}
+                    styles={{ container: { backgroundColor: 'rgba(0, 0, 0, 0.8)' } }}
+                    plugins={[ZoomPlugin]}
+                    zoom={{ maxZoomPixelRatio: 1.5, scrollToZoom: true }}
+                />
+            )}
         </section>
     );
 };
