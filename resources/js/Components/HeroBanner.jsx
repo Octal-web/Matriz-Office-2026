@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, lazy, useEffect, useRef } from 'react';
 import { CustomLink } from '@/Components/CustomLink';
-import { HeroProjectForm } from '@/Components/HeroProjectForm';
 
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+const HeroProjectForm = lazy(() =>
+    import('@/Components/HeroProjectForm').then((module) => ({
+        default: module.HeroProjectForm,
+    }))
+);
 
 export const HeroBanner = () => {
     const sectionRef = useRef(null);
@@ -20,78 +20,111 @@ export const HeroBanner = () => {
     ];
 
     useEffect(() => {
-        const context = gsap.context(() => {
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const quoteItems = HeroQuoteRefs.current.filter(Boolean);
+        let context;
+        let cancelled = false;
 
-            if (prefersReducedMotion) {
-                gsap.set([HeroTextRef.current, ...quoteItems], { y: 0, opacity: 1 });
-                gsap.set(HeroImgRef.current, { backgroundPositionY: '50%' });
+        const runAnimation = async () => {
+            if (typeof window === 'undefined') {
                 return;
             }
 
-            gsap.fromTo(
-                HeroImgRef.current,
-                { backgroundPositionY: '50%' },
-                {
-                    backgroundPositionY: '-40%',
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: sectionRef.current,
-                        start: 'top top',
-                        end: 'bottom top',
-                        scrub: true,
-                    },
-                }
-            );
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+            const quoteItems = HeroQuoteRefs.current.filter(Boolean);
 
-            quoteItems.forEach((ref, index) => {
+            if (prefersReducedMotion || !isDesktop) {
+                quoteItems.forEach((item) => {
+                    if (item) {
+                        item.style.transform = 'translateY(0)';
+                    }
+                });
+
+                if (HeroTextRef.current) {
+                    HeroTextRef.current.style.opacity = 1;
+                    HeroTextRef.current.style.transform = 'translateY(0)';
+                }
+
+                return;
+            }
+
+            const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+                import('gsap'),
+                import('gsap/ScrollTrigger'),
+            ]);
+
+            if (cancelled) {
+                return;
+            }
+
+            gsap.registerPlugin(ScrollTrigger);
+
+            context = gsap.context(() => {
                 gsap.fromTo(
-                    ref,
-                    { y: '100%' },
+                    HeroImgRef.current,
+                    { yPercent: 0 },
                     {
-                        y: 0,
-                        duration: 0.8,
-                        ease: 'power2.out',
-                        delay: index * 0.15,
+                        yPercent: -8,
+                        ease: 'none',
                         scrollTrigger: {
                             trigger: sectionRef.current,
-                            start: 'top 75%',
-                            once: true,
+                            start: 'top top',
+                            end: 'bottom top',
+                            scrub: true,
                         },
                     }
                 );
-            });
 
-            gsap.fromTo(
-                HeroTextRef.current,
-                { y: 20, opacity: 0 },
-                {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.6,
-                    delay: 0.6,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: HeroTextRef.current,
-                        start: 'top 85%',
-                        once: true,
-                    },
-                }
-            );
-        }, sectionRef);
+                quoteItems.forEach((ref, index) => {
+                    gsap.fromTo(
+                        ref,
+                        { y: '100%' },
+                        {
+                            y: 0,
+                            duration: 0.8,
+                            ease: 'power2.out',
+                            delay: index * 0.15,
+                        }
+                    );
+                });
 
-        ScrollTrigger.refresh();
+                gsap.fromTo(
+                    HeroTextRef.current,
+                    { y: 20, opacity: 0 },
+                    {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.6,
+                        delay: 0.6,
+                        ease: 'power2.out',
+                    }
+                );
+            }, sectionRef);
 
-        return () => context.revert();
+            ScrollTrigger.refresh();
+        };
+
+        runAnimation();
+
+        return () => {
+            cancelled = true;
+
+            if (context) {
+                context.revert();
+            }
+        };
     }, []);
 
     return (
         <section ref={sectionRef} className="relative overflow-hidden">
-            <div
+            <img
                 ref={HeroImgRef}
-                className="absolute inset-0 bg-center bg-no-repeat opacity-60 max-[430px]:bg-[length:auto_120%] max-[570px]:bg-[length:200%] sm:bg-[length:170%] sm:opacity-100 xl:bg-[length:100%]"
-                style={{ backgroundImage: "url('/content/display/main-bg.jpg')" }}
+                src="/content/display/main-bg.jpg"
+                alt=""
+                width="1920"
+                height="1080"
+                fetchPriority="high"
+                decoding="sync"
+                className="absolute inset-0 h-full w-full object-cover object-center opacity-60 sm:opacity-100"
             />
 
             <div className="absolute inset-0 bg-black opacity-50" />
@@ -115,7 +148,10 @@ export const HeroBanner = () => {
                             ))}
                         </h1>
 
-                        <div ref={HeroTextRef} className="mb-8 max-w-[715px] text-balance text-sm font-light leading-normal text-white opacity-0 sm:mb-11 sm:text-base xl:text-lg 2xl:text-xl">
+                        <div
+                            ref={HeroTextRef}
+                            className="mb-8 max-w-[715px] text-balance text-sm font-light leading-normal text-white opacity-100 sm:mb-11 sm:text-base xl:text-lg 2xl:text-xl lg:opacity-0"
+                        >
                             <p>
                                 A Matriz Office desenvolve soluções completas para ambientes corporativos, unindo mobiliário, planejamento de espaços e personalização para criar escritórios mais funcionais, produtivos e alinhados à realidade de cada empresa.
                             </p>
@@ -133,12 +169,14 @@ export const HeroBanner = () => {
                     </div>
 
                     <div className="w-full max-lg:mx-auto max-lg:max-w-[520px]">
-                        <HeroProjectForm
-                            submitRoute="Contato.enviar"
-                            privacyUrl="/politica-de-privacidade"
-                            buttonLabel="Peça seu orçamento"
-                            fieldPrefix="hero"
-                        />
+                        <Suspense fallback={<div className="min-h-[420px]" />}>
+                            <HeroProjectForm
+                                submitRoute="Contato.enviar"
+                                privacyUrl="/politica-de-privacidade"
+                                buttonLabel="Peça seu orçamento"
+                                fieldPrefix="hero"
+                            />
+                        </Suspense>
                     </div>
                 </div>
             </div>
