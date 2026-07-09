@@ -1,11 +1,6 @@
-import React, { Suspense, lazy, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { CustomLink } from '@/Components/CustomLink';
-
-const HeroProjectForm = lazy(() =>
-    import('@/Components/HeroProjectForm').then((module) => ({
-        default: module.HeroProjectForm,
-    }))
-);
+import { HeroProjectForm } from '@/Components/HeroProjectForm';
 
 export const HeroBanner = () => {
     const sectionRef = useRef(null);
@@ -23,9 +18,8 @@ export const HeroBanner = () => {
             }
 
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
 
-            if (prefersReducedMotion || !isDesktop) {
+            if (prefersReducedMotion) {
                 return;
             }
 
@@ -126,7 +120,7 @@ export const HeroBanner = () => {
             <div className="absolute bottom-0 left-0 top-0 w-full bg-gradient-to-r from-black/95 from-20% via-black/55 to-black/20 lg:w-3/4 lg:to-transparent" />
 
             <div className="relative container max-w-large">
-                <div className="grid min-h-[100vh] grid-cols-1 items-end gap-10 pb-12 pt-28 md:min-h-[84vh] md:pb-[4%] lg:grid-cols-[minmax(0,1fr)_430px] lg:items-end lg:gap-12 2xl:min-h-[78vh] 2xl:pb-[5%]">
+                <div className="grid min-h-[100svh] grid-cols-1 items-end gap-10 pb-12 pt-28 md:min-h-[84vh] md:pb-[4%] lg:grid-cols-[minmax(0,1fr)_430px] lg:items-end lg:gap-12 2xl:min-h-[78vh] 2xl:pb-[5%]">
                     <div className="max-w-4xl md:ml-2">
                         <h1 className="mb-6 text-3xl leading-tight text-white sm:text-4xl 2xl:text-[44px]">
                             <span className="inline sm:block">
@@ -144,7 +138,7 @@ export const HeroBanner = () => {
 
                         <div
                             ref={heroTextRef}
-                            className="mb-8 max-w-[715px] text-balance text-sm font-light leading-normal text-white sm:mb-11 sm:text-base xl:text-lg 2xl:text-xl lg:opacity-0"
+                            className="mb-8 max-w-[715px] text-balance text-sm font-light leading-normal text-white sm:mb-11 sm:text-base xl:text-lg 2xl:text-xl"
                         >
                             <p>
                                 A Matriz Office desenvolve soluções completas para ambientes corporativos, unindo mobiliário, planejamento de espaços e personalização para criar escritórios mais funcionais, produtivos e alinhados à realidade de cada empresa.
@@ -153,7 +147,7 @@ export const HeroBanner = () => {
 
                         <div
                             ref={heroButtonRef}
-                            className="flex flex-wrap gap-4 sm:gap-6 lg:opacity-0"
+                            className="flex flex-wrap gap-4 sm:gap-6"
                         >
                             <CustomLink
                                 href={route('Home.index')}
@@ -165,15 +159,13 @@ export const HeroBanner = () => {
                         </div>
                     </div>
 
-                    <div className="w-full max-lg:mx-auto max-lg:max-w-[520px]">
-                        <Suspense fallback={<div className="min-h-[420px]" />}>
-                            <HeroProjectForm
-                                submitRoute="Contato.enviar"
-                                privacyUrl="/politica-de-privacidade"
-                                buttonLabel="Peça seu orçamento"
-                                fieldPrefix="hero"
-                            />
-                        </Suspense>
+                    <div className="w-full min-h-[520px] max-lg:mx-auto max-lg:max-w-[520px] lg:min-h-[560px]">
+                        <HeroProjectForm
+                            submitRoute="Contato.enviar"
+                            privacyUrl="/politica-de-privacidade"
+                            buttonLabel="Peça seu orçamento"
+                            fieldPrefix="hero"
+                        />
                     </div>
                 </div>
             </div>

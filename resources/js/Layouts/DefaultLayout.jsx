@@ -321,7 +321,7 @@ const DefaultLayout = ({
                                         width="220"
                                         height="80"
                                         decoding="async"
-                                        className="block max-w-30 xl:max-w-50 lg:max-w-80"
+                                        className="block h-auto w-[120px] lg:w-[180px] xl:w-[200px]"
                                     />
                                 </Link>
                             </h1>
