@@ -1,6 +1,6 @@
 {
-  "_DefaultLayout-CftdacjO.js": {
-    "file": "assets/DefaultLayout-CftdacjO.js",
+  "_DefaultLayout-CRy_Iig0.js": {
+    "file": "assets/DefaultLayout-CRy_Iig0.js",
     "name": "DefaultLayout",
     "imports": [
       "resources/js/app.jsx"
@@ -15,16 +15,15 @@
       "assets/logo-footer-DTUgbuoB.png"
     ]
   },
-  "_Home-lJsVnq_S.js": {
-    "file": "assets/Home-lJsVnq_S.js",
+  "_Home-DYdImkwp.js": {
+    "file": "assets/Home-DYdImkwp.js",
     "name": "Home",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-CftdacjO.js"
+      "_DefaultLayout-CRy_Iig0.js"
     ],
     "dynamicImports": [
-      "resources/js/Components/HeroProjectForm.jsx",
       "resources/js/Components/GridGallery.jsx",
       "resources/js/Components/Solutions.jsx",
       "resources/js/Components/Showrooms.jsx",
@@ -32,22 +31,15 @@
       "resources/js/Components/DoubtsList.jsx"
     ]
   },
-  "_InputMask-C-5smflQ.js": {
-    "file": "assets/InputMask-C-5smflQ.js",
-    "name": "InputMask",
-    "imports": [
-      "resources/js/app.jsx"
-    ]
-  },
-  "_createLucideIcon-BFgj0m0u.js": {
-    "file": "assets/createLucideIcon-BFgj0m0u.js",
+  "_createLucideIcon-Bnpam5ye.js": {
+    "file": "assets/createLucideIcon-Bnpam5ye.js",
     "name": "createLucideIcon",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_swiper-react-DlacIoT-.js": {
-    "file": "assets/swiper-react-DlacIoT-.js",
+  "_swiper-react-DTK6sTKu.js": {
+    "file": "assets/swiper-react-DTK6sTKu.js",
     "name": "swiper-react",
     "imports": [
       "resources/js/app.jsx"
@@ -60,7 +52,7 @@
     "isDynamicEntry": true
   },
   "node_modules/yet-another-react-lightbox/dist/index.js": {
-    "file": "assets/index-BLj1u2xt.js",
+    "file": "assets/index-Dt9RyWhQ.js",
     "name": "index",
     "src": "node_modules/yet-another-react-lightbox/dist/index.js",
     "isDynamicEntry": true,
@@ -69,7 +61,7 @@
     ]
   },
   "node_modules/yet-another-react-lightbox/dist/plugins/zoom/index.js": {
-    "file": "assets/index-BIWyMTOa.js",
+    "file": "assets/index-B4yjmiDY.js",
     "name": "index",
     "src": "node_modules/yet-another-react-lightbox/dist/plugins/zoom/index.js",
     "isDynamicEntry": true,
@@ -83,7 +75,7 @@
     "src": "node_modules/yet-another-react-lightbox/dist/styles.css"
   },
   "resources/js/Components/CookieModal.jsx": {
-    "file": "assets/CookieModal-BcR-sTXL.js",
+    "file": "assets/CookieModal-HyVj3oIB.js",
     "name": "CookieModal",
     "src": "resources/js/Components/CookieModal.jsx",
     "isDynamicEntry": true,
@@ -92,19 +84,19 @@
     ]
   },
   "resources/js/Components/DoubtsList.jsx": {
-    "file": "assets/DoubtsList-BaXqMlAf.js",
+    "file": "assets/DoubtsList-CIy4dMbK.js",
     "name": "DoubtsList",
     "src": "resources/js/Components/DoubtsList.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-CftdacjO.js",
-      "_createLucideIcon-BFgj0m0u.js",
-      "_Home-lJsVnq_S.js"
+      "_DefaultLayout-CRy_Iig0.js",
+      "_createLucideIcon-Bnpam5ye.js",
+      "_Home-DYdImkwp.js"
     ]
   },
   "resources/js/Components/ExitIntentModal.jsx": {
-    "file": "assets/ExitIntentModal-DGnHi1hT.js",
+    "file": "assets/ExitIntentModal-C4sEu7gP.js",
     "name": "ExitIntentModal",
     "src": "resources/js/Components/ExitIntentModal.jsx",
     "isDynamicEntry": true,
@@ -113,68 +105,59 @@
     ]
   },
   "resources/js/Components/GridGallery.jsx": {
-    "file": "assets/GridGallery-C6H7SLyr.js",
+    "file": "assets/GridGallery-DH9ino4L.js",
     "name": "GridGallery",
     "src": "resources/js/Components/GridGallery.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Home-lJsVnq_S.js",
-      "_DefaultLayout-CftdacjO.js"
+      "_Home-DYdImkwp.js",
+      "_DefaultLayout-CRy_Iig0.js"
     ],
     "dynamicImports": [
       "node_modules/yet-another-react-lightbox/dist/index.js",
       "node_modules/yet-another-react-lightbox/dist/plugins/zoom/index.js"
     ]
   },
-  "resources/js/Components/HeroProjectForm.jsx": {
-    "file": "assets/HeroProjectForm-wNllgfwL.js",
-    "name": "HeroProjectForm",
-    "src": "resources/js/Components/HeroProjectForm.jsx",
-    "isDynamicEntry": true,
-    "imports": [
-      "resources/js/app.jsx",
-      "_InputMask-C-5smflQ.js"
-    ]
-  },
   "resources/js/Components/ProjectForm.jsx": {
-    "file": "assets/ProjectForm-B_zddoMO.js",
+    "file": "assets/ProjectForm-NAUm7nGS.js",
     "name": "ProjectForm",
     "src": "resources/js/Components/ProjectForm.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_InputMask-C-5smflQ.js"
+      "_Home-DYdImkwp.js",
+      "_DefaultLayout-CRy_Iig0.js"
     ]
   },
   "resources/js/Components/Showrooms.jsx": {
-    "file": "assets/Showrooms-BuIZIdS0.js",
+    "file": "assets/Showrooms-lJaWrig8.js",
     "name": "Showrooms",
     "src": "resources/js/Components/Showrooms.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-CftdacjO.js",
-      "_Home-lJsVnq_S.js",
-      "_swiper-react-DlacIoT-.js",
-      "_createLucideIcon-BFgj0m0u.js"
+      "_DefaultLayout-CRy_Iig0.js",
+      "_Home-DYdImkwp.js",
+      "_swiper-react-DTK6sTKu.js",
+      "_createLucideIcon-Bnpam5ye.js"
     ],
     "css": [
       "assets/Showrooms-kT3axgoG.css"
     ]
   },
   "resources/js/Components/Solutions.jsx": {
-    "file": "assets/Solutions-BzhsjqDy.js",
+    "file": "assets/Solutions-DRHEbihL.js",
     "name": "Solutions",
     "src": "resources/js/Components/Solutions.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_Home-lJsVnq_S.js",
-      "_swiper-react-DlacIoT-.js",
+      "_Home-DYdImkwp.js",
+      "_swiper-react-DTK6sTKu.js",
       "node_modules/yet-another-react-lightbox/dist/index.js",
       "node_modules/yet-another-react-lightbox/dist/plugins/zoom/index.js",
-      "_DefaultLayout-CftdacjO.js"
+      "_DefaultLayout-CRy_Iig0.js"
     ],
     "css": [
       "assets/Solutions-By9dwpI9.css",
@@ -182,37 +165,37 @@
     ]
   },
   "resources/js/Pages/CadastroConcluido.jsx": {
-    "file": "assets/CadastroConcluido-BMJpvdAl.js",
+    "file": "assets/CadastroConcluido-Bw40UTvQ.js",
     "name": "CadastroConcluido",
     "src": "resources/js/Pages/CadastroConcluido.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-CftdacjO.js"
+      "_DefaultLayout-CRy_Iig0.js"
     ]
   },
   "resources/js/Pages/PoliticaPrivacidade.jsx": {
-    "file": "assets/PoliticaPrivacidade-CZzfcpXq.js",
+    "file": "assets/PoliticaPrivacidade-BfPD9X7D.js",
     "name": "PoliticaPrivacidade",
     "src": "resources/js/Pages/PoliticaPrivacidade.jsx",
     "isDynamicEntry": true,
     "imports": [
       "resources/js/app.jsx",
-      "_DefaultLayout-CftdacjO.js"
+      "_DefaultLayout-CRy_Iig0.js"
     ]
   },
   "resources/js/app.jsx": {
-    "file": "assets/app-DvRUSmQz.js",
+    "file": "assets/app-nlATxMWJ.js",
     "name": "app",
     "src": "resources/js/app.jsx",
     "isEntry": true,
     "dynamicImports": [
       "resources/js/Pages/CadastroConcluido.jsx",
-      "_Home-lJsVnq_S.js",
+      "_Home-DYdImkwp.js",
       "resources/js/Pages/PoliticaPrivacidade.jsx"
     ],
     "css": [
-      "assets/app-Cf19TLgH.css"
+      "assets/app-5qNXpXS1.css"
     ]
   },
   "resources/js/assets/logo-footer.png": {
